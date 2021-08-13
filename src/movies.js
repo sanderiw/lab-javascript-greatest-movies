@@ -7,6 +7,17 @@ function getAllDirectors(movies) {
   }) 
     
 }
+// Bonus
+function uniqueDirectors(movies) {
+  let directors = getAllDirectors(movies);
+  let unique = [];
+  directors.map((director) => {
+    if (directors.indexOf(director) === directors.lastIndexOf(director)) {
+      unique.push(director);
+    }
+  })
+  return unique;
+}
 
 // Iteration 2: Steven Spielberg. The best? - How many drama movies did STEVEN SPIELBERG direct?
 function howManyMovies(movies) {
@@ -105,11 +116,19 @@ function bestYearAvg(movies) {
       return b - a;
   })
   let score = sortedScores[0];
-  let year = yearArr[avgScores.indexOf(sortedScores[0])];
+  if (avgScores.indexOf(sortedScores[0]) !== avgScores.lastIndexOf(sortedScores[0])) {
+    let year1 = yearArr[avgScores.indexOf(sortedScores[0])];
+    let year2 = yearArr[avgScores.lastIndexOf(sortedScores[0])]
+    if (year1 < year2) {
+      let year = year1;
+    } else {
+      year = year2;
+    }
+  } else {
+    year = yearArr[avgScores.indexOf(sortedScores[0])];
+  }
   return `The best year was ${year} with an average score of ${score}`
 }
-
-
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
