@@ -67,10 +67,47 @@ function orderAlphabetically(movies) {
 }
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
-function turnHoursToMinutes() {}
+function turnHoursToMinutes(movies) {
+  //const newMovies = Object.assign([], movies);
+  let newMovies = JSON.parse(JSON.stringify(movies));
+  return newMovies.map((movie) => {
+    let hours = 0;
+    if (movie.duration.includes('h')) {
+      hours = parseInt(movie.duration.slice(0, movie.duration.indexOf('h')));
+    }
+    let min = 0;
+    if (movie.duration.includes('m')) {
+      min = parseInt(movie.duration.slice(movie.duration.indexOf(' '), movie.duration.indexOf('m')));
+    }
+    movie.duration = parseInt(hours * 60 + min);
+    return movie
+  })
+}
 
 // BONUS - Iteration 8: Best yearly score average - Best yearly score average
-function bestYearAvg() {}
+function bestYearAvg(movies) {
+  if (movies.length === 0) {
+    return null;
+  }
+  let yearArr = movies.map(movie => movie.year)
+  let moviesOfYear = [];
+  for (let i = 0; i < yearArr.length; i++) {
+      moviesOfYear.push(movies.filter((movie) => {
+          return movie.year === yearArr[i];
+      }))
+  }
+  let avgScores = [];
+  for (let i = 0; i < moviesOfYear.length; i++) {
+      avgScores.push(scoresAverage(moviesOfYear[i]));
+  }
+  let avgScoresCopy = JSON.parse(JSON.stringify(avgScores));
+  let sortedScores = avgScoresCopy.sort((a, b) => {
+      return b - a;
+  })
+  let score = sortedScores[0];
+  let year = yearArr[avgScores.indexOf(sortedScores[0])];
+  return `The best year was ${year} with an average score of ${score}`
+}
 
 
 
